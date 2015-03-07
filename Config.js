@@ -51,6 +51,30 @@ config.queueTask = function(task) {
 
 
 /**
+ * @callback elixirRecipe
+ * @param  {object} mix - Elixir config object
+ */
+
+/**
+ * Add asynchronous group of tasks.
+ *
+ * @param {elixirRecipe} recipe - function applied with elixir config element
+ */
+config.asyncGroup = function (recipe) {
+    var queue = this.tasks,
+        asyncQueue = [];
+
+    // Push to asyncQueue
+    this.tasks = asyncQueue;
+    recipe(this);
+
+    // Add to tasks
+    queue.push(asyncQueue);
+    this.tasks = queue;
+    return this;
+};
+
+/**
  * Set the default directory paths.
  *
  * @param {string} file
