@@ -9,7 +9,8 @@ var Elixir = function (recipe) {
 
 Elixir.config = require('./Config');
 Elixir.config.setDefaultsFrom('elixir.json');
-Elixir.$ = loadPlugins();
+Elixir.plugins = loadPlugins();
+Elixir._ = require('underscore');
 
 Elixir.extend = function (name, callback) {
     Elixir.config[name] = callback;
