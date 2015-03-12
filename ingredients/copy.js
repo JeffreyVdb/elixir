@@ -13,6 +13,10 @@ var config = elixir.config;
  |
  */
 
+elixir.extend('copyFiles', function (source, destination) {
+    return copy(source, destination, false);
+});
+
 elixir.extend('copy', function(source, destination) {
-    return copy(source, destination);
+    return copy(source, destination, true);
 });
