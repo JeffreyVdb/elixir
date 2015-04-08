@@ -79,6 +79,8 @@ var assertFilesExist = function(files) {
 		file = path.normalize(file);
 		fs.open(file, 'r', function (error, fd) {
 			if (error != null) {
+				if (error.code !== 'ENOENT') throw error;
+
 				logMissingFile(file);
 				return;
 			}
