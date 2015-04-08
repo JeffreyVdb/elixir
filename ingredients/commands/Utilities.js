@@ -1,5 +1,6 @@
 var gutil = require('gulp-util');
-var fs = require('fs');
+var fs = require('fs'),
+	path = require('path');
 
 /**
  * Build up the given src file(s), to be passed to Gulp.
@@ -74,11 +75,16 @@ var assertFilesExist = function(files) {
         // paths that areregular expressions.
         if(/\*/.test(file)) return;
 
-        fs.exists(file, function(found) {
-            if ( ! found) {
-                logMissingFile(file);
-            }
-        });
+		// Normalize path first
+		file = path.normalize(file);
+		fs.open(file, 'r', function (error, fd) {
+			if (error != null) {
+				logMissingFile(file);
+				return;
+			}
+
+			fs.close(fd);
+		});
     });
 };
 
